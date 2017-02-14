@@ -29,11 +29,10 @@ action set_udp_ports() {
     modify_field(l4.dport, udp.dstPort);
 }
 
+primitive_action gen_rand();
+
 #define MAX_RN	10000
-// Generate random number between 1 and MAX_RN
-action gen_rand() {
-    modify_field_rng_uniform(sampling.rand, 1, MAX_RN);
-}
+
 
 // Use pre-programmed table lookup to find minimum packet length
 // to be sampled, corresponding to a random number
