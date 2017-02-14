@@ -66,7 +66,7 @@ counter flow_counter {
 // Random number generation used for packet sampling
 table rand {
     actions {
-        gen_rand; // default
+        gen_rand_number; // default
     }
 }
 

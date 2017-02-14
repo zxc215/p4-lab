@@ -29,6 +29,10 @@ action set_udp_ports() {
     modify_field(l4.dport, udp.dstPort);
 }
 
+action gen_rand_number() {
+    gen_rand();
+}
+
 primitive_action gen_rand();
 
 #define MAX_RN	10000
