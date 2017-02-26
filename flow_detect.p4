@@ -119,7 +119,7 @@ table send_frame {
         standard_metadata.instance_type : exact;
     }
     actions {
-        _nop;
+        send_to_port;
     }
     size: 16;
 }

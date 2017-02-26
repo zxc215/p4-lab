@@ -62,3 +62,6 @@ action sample_pkt() {
     clone_ingress_pkt_to_egress(CPU_MIRROR_SESSION_ID, copy_to_cpu_fields);
 }
 
+action sent_to_port(outport) {
+    modify_field(standard_metadata.egress_spec, outport);
+}
