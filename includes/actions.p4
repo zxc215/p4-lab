@@ -55,7 +55,7 @@ field_list copy_to_cpu_fields {
     ipv4.dstAddr;
     ipv4.protocol;
     l4.sport;
-    l4.dport
+    l4.dport;
 }
 
 
