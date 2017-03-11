@@ -65,8 +65,8 @@ def processPacket(packet):
                 actions = '{  "type" : "_nop"  }'
                 match = '{ "ipv4.srcAddr" : {  "value" : "%s" }, "ipv4.dstAddr" : {  "value" : "%s" }, "ipv4.protocol" : {  "value" : "%d" }, "l4.sport" : {  "value" : "%d" }, "l4.dport" : {  "value" : "%d" } }' % \
                         (ip_src, ip_dst, proto, sport, dport)
-
-                RTEInterface.Tables.AddRule(tbl_id, rule_name, default_rule, match, actions, 1)
+                with threading.Lock():
+                    RTEInterface.Tables.AddRule(tbl_id, rule_name, default_rule, match, actions, 1)
 
 
             except Exception, err:

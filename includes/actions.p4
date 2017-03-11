@@ -51,15 +51,18 @@ action no_sample() {
 }
 
 field_list copy_to_cpu_fields {
-    standard_metadata;
+    ipv4.srcAddr;
+    ipv4.dstAddr;
+    ipv4.protocol;
+    l4.sport;
+    l4.dport
 }
 
-#define CPU_MIRROR_SESSION_ID                  250
 
 // When sampling threshold is reached, packet is sent to CPU
 // and sampling register (count) is cleared
 action sample_pkt() {
-    clone_ingress_pkt_to_egress(CPU_MIRROR_SESSION_ID, copy_to_cpu_fields);
+    generate_digest(0,copy_to_cpu_fields);
 }
 
 action send_to_port(outport) {
