@@ -1,0 +1,90 @@
+{
+    "tables" : {
+        "ports" : {
+            "rules" : [
+                {
+                    "name" : "ports_1",
+                    "match" : {
+                        "ipv4.protocol" : {
+                            "value" : "6"
+                        }
+                    },
+                    "action" : {
+                        "type" : "set_tcp_ports",
+                        "data" : {}
+                    }
+                },
+                {
+                    "name" : "ports_2",
+                    "match" : {
+                        "ipv4.protocol" : {
+                            "value" : "17"
+                        }
+                    },
+                    "action" : {
+                        "type" : "set_udp_ports",
+                        "data" : {}
+                    }
+                }
+            ]
+        },
+        "rand" : {
+            "default_rule" : {
+                "name" : "rand_default",
+                "action" : {
+                    "type" : "gen_rand_number",
+                    "data" : {}
+                }
+            }
+        },
+        "sample_prob" : {
+            "default_rule" : {
+                "name" : "sample_prob_default",
+                "action" : {
+                    "type" : "no_sample",
+                    "data" : {}
+                }
+            },
+            "rules" : [
+                {
+                    "name" : "sample_prob_0",
+                    "match" : {
+                        "sampling.rand" : {
+                            "value" : "0"
+                        }
+                    },
+                    "action" : {
+                        "type" : "get_min_len",
+                        "data" : {
+                            "min_len" : {
+                                "value" : "0"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "sample" : {
+            "default_rule" : {
+                "name" : "sample_default",
+                "action" : {
+                    "type" : "sample_pkt",
+                    "data" : {}
+                }
+            }
+        },
+        "send_frame" : {
+            "default_rule" : {
+                "name" : "send_frame_default",
+                "action" : {
+                    "type" : "send_to_port",
+                    "data" : {
+                        "outport" : {
+                            "value" : "v0.1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

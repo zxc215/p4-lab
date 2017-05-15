@@ -17,6 +17,9 @@ limitations under the License.
 action _nop() {
 }
 
+action _nop_2() {
+}
+
 // Write TCP port numbers to metadata
 action set_tcp_ports() {
     modify_field(l4.sport, tcp.srcPort);
@@ -49,6 +52,7 @@ action get_min_len(min_len) {
 action no_sample() {
     modify_field(sampling.in_range, 0);
 }
+
 
 field_list copy_to_cpu_fields {
     ipv4.srcAddr;

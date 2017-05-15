@@ -53,7 +53,7 @@ table flow {
     actions {
         _nop;
     }
-    size: 16384;
+    size: 65536;
 }
 
 // Byte counter associated with table above.  Each flow present in the table
@@ -70,6 +70,7 @@ table rand {
     }
 }
 
+
 // This table is used to look up the shortest packet that can be sampled
 // according to the generated random number.  If the random number is within
 // the valid range for sampling, the corresponding min packet length is read out
@@ -77,7 +78,7 @@ table rand {
 // This table is programmed at startup.
 table sample_prob {
     reads {
-	sampling.rand: range;
+	sampling.rand: exact;
     }
     actions {
 	get_min_len;
@@ -85,10 +86,27 @@ table sample_prob {
     }
 }
 
+counter sample_prob_counter {
+    type: bytes;
+    direct: sample_prob;
+}
+
 // Packet sampling (send mirrored copy to CPU)
 table sample {
     actions {
         sample_pkt; // default
+    }
+}
+
+
+counter no_op_counter {
+    type: packets;
+    direct: no_operation;
+}
+
+table no_operation {
+    actions {
+        _nop_2;
     }
 }
 
@@ -111,6 +129,13 @@ control ingress {
             }
         }
     }
+    apply(send_frame);
+}
+
+
+counter total_bytes {
+    type: bytes;
+    direct: send_frame;
 }
 
 // Send all packets (normal and mirrored)
@@ -121,9 +146,8 @@ table send_frame {
     actions {
         send_to_port;
     }
-    size: 16;
 }
 
+
 control egress {
-    apply(send_frame);
 }
